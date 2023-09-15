@@ -1,2 +1,2 @@
 # yunfaAvatar
-Utility for automatic centralized changing of avatar in Discord, Steam, Telegram, Google, etc.
+Utility for automatic centralized changing of avatar in Github, Discord, Steam, Hypixel, etc. 
