@@ -14,13 +14,119 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
+
+###########################################
+# Functions Functions Functions Functions #
+###########################################
+
+# StackOverflow : https://stackoverflow.com/a/25268449
+min() {
+  printf "%s\n" "${@:2}" | sort "$1" | head -n1
+}
+max() {
+  min ${1}r ${@:2}
+}
+
+# Github : https://github.com/dylanaraps/neofetch/blob/master/neofetch#L4775
+get_user_config() {
+    # --config /path/to/config.conf
+    if [[ -f "$config_file" ]]; then
+        source "$config_file"
+        printf "CONFIG: Sourced user config. (${config_file})"
+        return
+
+    elif [[ -f "${XDG_CONFIG_HOME}/yunfaAvatar/config.conf" ]]; then
+        source "${XDG_CONFIG_HOME}/yunfaAvatar/config.conf"
+        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config.conf)"
+
+    elif [[ -f "${XDG_CONFIG_HOME}/yunfaAvatar/config" ]]; then
+        source "${XDG_CONFIG_HOME}/yunfaAvatar/config"
+        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config)"
+
+    elif [[ -z "$no_config" ]]; then
+        config_file="${XDG_CONFIG_HOME}/yunfaAvatar/config.conf"
+
+        # The config file doesn't exist, create it.
+        mkdir -p "${XDG_CONFIG_HOME}/yunfaAvatar/"
+        printf '%s\n' "$config" > "$config_file"
+    fi
+}
+
 ###########################################
 # Config Config Config Config Config Conf #
 ###########################################
 
-source ./yunfaAvatar.conf
+read -rd '' config <<'EOF'
+# ------------------------------------------- #
+#                 yunfaAvatar                 #
+# you can specify each value below as an      #
+# option by its name. you can remove services #
+# you don’t need from the config. to update   #
+# the avatar in the service by default, set   #
+# true in the variable with the name of the   #
+# service.                                    #
+#                                             #
+#   https://github.com/yunfachi/yunfaavatar   #
+# ------------------------------------------- #
 
-optspec=":hv-:"
+# show response from requests to update avatar
+debug=false
+
+# -------------------------------------------- #
+# Avatar Avatar Avatar Avatar Avatar Avatar Av #
+# -------------------------------------------- #
+
+# link or file
+avatar="https://cataas.com/cat/cute"
+
+# required if you use the url to download the avatar
+# /tmp/avatar.${extension}
+extension="jpg"
+
+# crop avatar using these variables
+# if it is still zero, then the avatar will be automatically cropped in the center
+cropped_x=0
+cropped_y=0
+cropped_width=0
+cropped_height=0
+
+# -------------------------------------------- #
+# Services Services Services Services Services #
+# -------------------------------------------- #
+
+# service:github
+github=false
+github_url="https://github.com/upload/policies/avatars"
+github_session="xxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxx"
+github_auth="xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxx"
+github_id="xxxxxxxx"
+
+# service:discord
+discord=false
+discord_url="https://discord.com/api/v9/users/@me"
+discord_auth="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+discord_properties="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# service:steam
+steam=false
+steam_url="https://steamcommunity.com/actions/FileUploader"
+steam_sessionid="xxxxxxxxxxxxxxxxxxxxxxxx"
+steam_auth="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxx"
+steam_id64="xxxxxxxxxxxxxxxxx"
+
+# service:hypixel
+hypixel=false
+hypixel_url="https://hypixel.net/account/avatar"
+hypixel_fetchurl="https://hypixel.net/rules"
+hypixel_id="xxxxxxx"
+hypixel_auth="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+hypixel_tfa="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+EOF
+
+get_user_config
+
+optspec=":-:"
 while getopts "$optspec" optchar; do
   case "${optchar}" in
     -)
@@ -38,18 +144,6 @@ while getopts "$optspec" optchar; do
       ;;
   esac
 done
-
-###########################################
-# Functions Functions Functions Functions #
-###########################################
-
-# StackOverflow : https://stackoverflow.com/a/25268449
-min() {
-  printf "%s\n" "${@:2}" | sort "$1" | head -n1
-}
-max() {
-  min ${1}r ${@:2}
-}
 
 ###########################################
 # Avatar Avatar Avatar Avatar Avatar Avat #
@@ -230,5 +324,6 @@ if $hypixel; then update_hypixel; fi
 # Exit Exit Exit Exit Exit Exit Exit Exit #
 ###########################################
 
-#rm -rf $avatar
+rm -rf $avatar
+rm -rf /tmp/avatar.json
 printf "\nINFO: Finished"
