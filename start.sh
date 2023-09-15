@@ -33,16 +33,16 @@ get_user_config() {
     # --config /path/to/config.conf
     if [[ -f "$config_file" ]]; then
         source "$config_file"
-        printf "CONFIG: Sourced user config. (${config_file})"
+        printf "CONFIG: Sourced user config. (${config_file}) \n"
         return
 
     elif [[ -f "${XDG_CONFIG_HOME}/yunfaAvatar/config.conf" ]]; then
         source "${XDG_CONFIG_HOME}/yunfaAvatar/config.conf"
-        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config.conf)"
+        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config.conf) \n"
 
     elif [[ -f "${XDG_CONFIG_HOME}/yunfaAvatar/config" ]]; then
         source "${XDG_CONFIG_HOME}/yunfaAvatar/config"
-        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config)"
+        printf "CONFIG: Sourced user config.    (${XDG_CONFIG_HOME}/yunfaAvatar/config) \n"
 
     elif [[ -z "$no_config" ]]; then
         config_file="${XDG_CONFIG_HOME}/yunfaAvatar/config.conf"
@@ -50,6 +50,8 @@ get_user_config() {
         # The config file doesn't exist, create it.
         mkdir -p "${XDG_CONFIG_HOME}/yunfaAvatar/"
         printf '%s\n' "$config" > "$config_file"
+
+        get_user_config
     fi
 }
 
