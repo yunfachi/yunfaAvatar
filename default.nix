@@ -7,6 +7,7 @@
 , x11Support ? true
 , ueberzug
 , fetchpatch
+, pkgs
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "yunfaavatar";
@@ -22,7 +23,7 @@ stdenvNoCC.mkDerivation rec {
   outputs = [ "out" "man" ];
 
   strictDeps = true;
-  buildInputs = [ bash imagemagick ];
+  buildInputs = [ bash pkgs.imagemagick ];
   nativeBuildInputs = [ makeWrapper ];
 
   makeFlags = [
