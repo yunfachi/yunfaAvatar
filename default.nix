@@ -3,7 +3,7 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "yunfaavatar";
-  version = "unstable-2023-09-15";
+  version = "unstable-2023-09-17";
 
   src = fetchFromGitHub {
     owner = "yunfachi";
@@ -15,7 +15,7 @@ stdenvNoCC.mkDerivation rec {
   outputs = [ "out" "man" ];
 
   strictDeps = true;
-  buildInputs = [ bash ];
+  buildInputs = [ bash imagemagick ];
   nativeBuildInputs = [ makeWrapper ];
 
   makeFlags = [
