@@ -1,8 +1,8 @@
 
 # <p align="center">yunfaAvatar</p>
-  
+
 Utility for automatic centralized changing of avatar in Github, Discord, Steam, Hypixel, etc.
-    
+
 
 ## Usage  
 ```bash
@@ -25,11 +25,10 @@ yunfaavatar --avatar=cat.png --cropped_x=50 --cropped_y=50
 # discord=true
 yunfaavatar --avatar=cute_cat.png
 ```
-        
+
 ## Services    
 - GitHub
 - Discord
 - Steam
 - Habr Q&A (habrqna)
 - Hypixel
-        
