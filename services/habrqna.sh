@@ -29,12 +29,10 @@ save=$(curl -s \
   -d "avatar_url=$(sed -E 's/\\//g
                s/.*"url":"?([^,"]*)"?.*/\1/' <<< $upload)&\
   avatar=upload&\
-  firstname=&\
-  lastname=&\
-  short_about=&\
-  about=&\
-  contacts%5B0%5D%5Bprovider%5D=social_github&\
-  contacts%5B0%5D%5Bvalue%5D=https%3A%2F%2Fgithub.com%2Fyunfachi&\
+  firstname=$(grep -oP '(?<=name="firstname" type="text" value=")[^"]*' <<< "${fetch}")&\
+  lastname=$(grep -oP '(?<=name="lastname" type="text" value=")[^"]*' <<< "${fetch}")&\
+  short_about=$(grep -oP '(?<=name="short_about" type="text" value=")[^"]*' <<< "${fetch}")&\
+  about=$(grep -oP '(?<=name="about" rows="5">)[^<]*' <<< "${fetch}")&\
   place%5Bcountry%5D=0" \
   $habrqna_saveurl \
 )
