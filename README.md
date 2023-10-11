@@ -26,9 +26,10 @@ yunfaavatar --avatar=cat.png --cropped_x=50 --cropped_y=50
 yunfaavatar --avatar=cute_cat.png
 ```
 
-## Services    
+## Services
+- Discord    
 - GitHub
-- Discord
-- Steam
 - Habr Q&A (habrqna)
 - Hypixel
+- Shikimori
+- Steam

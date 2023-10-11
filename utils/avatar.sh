@@ -18,11 +18,11 @@ fi
 if [ "0" == $((${cropped_x#-}+${cropped_y#-}+${cropped_width#-}+${cropped_height#-})) ]; then
   width=$(identify -format '%w' $avatar)
   height=$(identify -format '%h' $avatar)
-  if [ $width -gt $height ]; then
+  if [ "${width}" -gt "${height}" ]; then
     cropped_width=$height
     cropped_height=$height
     let cropped_x=($width-$height)/2
-  elif [ $width -lt $height ]; then
+  elif [ "${width}" -lt "${height}" ]; then
     cropped_width=$width
     cropped_height=$width
     let cropped_y=($height-$width)/2

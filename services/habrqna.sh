@@ -5,17 +5,17 @@ INFO "Updating avatar in Habr Q&A"
 upload=$(curl -s \
   -X POST \
   -H "Content-Type: multipart/form-data" \
-  -b "toster_sid=${habrqna_tostersid}" \
+  -b "toster_sid=${habrqna_cookie_toster_sid}" \
   -F "files=@${avatar}" \
-  $habrqna_uploadurl \
+  "${habrqna_url_upload}" \
 )
 
 RESPONSE "HABRQNA-UPLOAD" "${upload}"
 
 fetch=$(curl -s \
   -X GET \
-  -b "toster_sid=${habrqna_tostersid}" \
-  $habrqna_fetchurl \
+  -b "toster_sid=${habrqna_cookie_toster_sid}" \
+  "${habrqna_url_fetch}" \
 )
 
 RESPONSE "HABRQNA-FETCH" "${fetch}"
@@ -23,7 +23,7 @@ RESPONSE "HABRQNA-FETCH" "${fetch}"
 save=$(curl -s \
   -X POST \
   -H "Referer: https://qna.habr.com/my/profile" \
-  -b "toster_sid=${habrqna_tostersid}" \
+  -b "toster_sid=${habrqna_cookie_toster_sid}" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -H "x-form-token: $(sed -n '/token/s/.*action="my\/save_profile"\s\method="post"\s\+data-token="\([^"]\+\).*/\1/p' <<< $fetch)" \
   -d "avatar_url=$(sed -E 's/\\//g
@@ -34,7 +34,7 @@ save=$(curl -s \
   short_about=$(grep -oP '(?<=name="short_about" type="text" value=")[^"]*' <<< "${fetch}")&\
   about=$(grep -oP '(?<=name="about" rows="5">)[^<]*' <<< "${fetch}")&\
   place%5Bcountry%5D=0" \
-  $habrqna_saveurl \
+  "${habrqna_url_save}" \
 )
 
 RESPONSE "HABRQNA-SAVE" "${save}"

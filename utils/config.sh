@@ -13,9 +13,9 @@ read -rd '' config <<'EOF'
 #   https://github.com/yunfachi/yunfaavatar   #
 # ------------------------------------------- #
 
-show_info=true
-show_response=false
-show_error=true
+show_info=true # statuses about avatar updates, avatar cropping, etc.
+show_response=false # response from the server. not recommended due to large responses
+show_error=true # for example a broken cookie
 
 # -------------------------------------------- #
 # Avatar Avatar Avatar Avatar Avatar Avatar Av #
@@ -39,40 +39,42 @@ cropped_height=0
 # Services Services Services Services Services #
 # -------------------------------------------- #
 
-# service:github
-github=false
-github_createurl="https://github.com/upload/policies/avatars"
-github_session="xxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxx"
-github_auth="xxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxx"
-github_id="xxxxxxxx"
-
 # service:discord
 discord=false
-discord_uploadurl="https://discord.com/api/v9/users/@me"
-discord_auth="xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-discord_properties="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+discord_header_Authorization=""
+discord_header_X-Super-Properties="eyJvcyI6IkxpbnV4IiwiYnJvd3NlciI6IkZpcmVmb3giLCJkZXZpY2UiOiIiLCJzeXN0ZW1fbG9jYWxlIjoiZW4tVVMiLCJicm93c2VyX3VzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoWDExOyBMaW51eCB4ODZfNjQ7IHJ2OjEwOS4wKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzExNy4wIiwiYnJvd3Nlcl92ZXJzaW9uIjoiMTE3LjAiLCJvc192ZXJzaW9uIjoiIiwicmVmZXJyZXIiOiJodHRwczovL3d3dy5nb29nbGUuY29tLyIsInJlZmVycmluZ19kb21haW4iOiJ3d3cuZ29vZ2xlLmNvbSIsInNlYXJjaF9lbmdpbmUiOiJnb29nbGUiLCJyZWZlcnJlcl9jdXJyZW50IjoiIiwicmVmZXJyaW5nX2RvbWFpbl9jdXJyZW50IjoiIiwicmVsZWFzZV9jaGFubmVsIjoic3RhYmxlIiwiY2xpZW50X2J1aWxkX251bWJlciI6MjI4NjcyLCJjbGllbnRfZXZlbnRfc291cmNlIjpudWxsfQ=="
+discord_url_upload="https://discord.com/api/v9/users/@me"
 
-# service:steam
-steam=false
-steam_uploadurl="https://steamcommunity.com/actions/FileUploader"
-steam_sessionid="xxxxxxxxxxxxxxxxxxxxxxxx"
-steam_auth="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxx"
-steam_id64="xxxxxxxxxxxxxxxxx"
+# service:github
+github=false
+github_cookie_user_session=""
+github_url_fetch="https://github.com/about"
+github_url_create="https://github.com/upload/policies/avatars"
 
-# service:qnahabr
+# service:habrqna
 habrqna=false
-habrqna_uploadurl="https://qna.habr.com/upload?profile=ss"
-habrqna_fetchurl="https://qna.habr.com/my/profile"
-habrqna_saveurl="https://qna.habr.com/my/save_profile"
-habrqna_tostersid="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+habrqna_cookie_toster_sid=""
+habrqna_url_upload="https://qna.habr.com/upload?profile=ss"
+habrqna_url_fetch="https://qna.habr.com/my/profile"
+habrqna_url_save="https://qna.habr.com/my/save_profile"
 
 # service:hypixel
 hypixel=false
-hypixel_uploadurl="https://hypixel.net/account/avatar"
-hypixel_fetchurl="https://hypixel.net/rules"
-hypixel_id="xxxxxxx"
-hypixel_auth="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-hypixel_tfa="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+hypixel_cookie_xfNew_user=""
+hypixel_cookie_xfNew_tfa_trust=""
+hypixel_url_fetch="https://github.com/settings/profile"
+hypixel_url_upload="https://hypixel.net/account/avatar"
+
+# service:shikimori
+shikimori=false
+shikimori_cookie_kawai_session=""
+shikimori_url_fetch="https://shikimori.one/for_right_holders"
+
+# service:steam
+steam=false
+steam_cookie_sessionid=""
+steam_cookie_steamLoginSecure=""
+steam_url_upload="https://steamcommunity.com/actions/FileUploader"
 EOF
 
 # Github : https://github.com/dylanaraps/neofetch/blob/master/neofetch#L4775

@@ -5,13 +5,13 @@ INFO "Updating avatar in Steam"
 upload=$(curl -s \
   -X POST \
   -H "Content-Type: multipart/form-data" \
-  -b "sessionid=${steam_sessionid}; steamLoginSecure=${steam_id64}%7C%7C${steam_auth};" \
+  -b "sessionid=${steam_cookie_sessionid}; steamLoginSecure=${steam_cookie_steamLoginSecure};" \
   -F "type=player_avatar_image" \
-  -F "sId=${steam_id64}" \
-  -F "sessionid=${steam_sessionid}" \
+  -F "sId=$(grep -oP '.*(?=%7C%7C)' <<< "${steam_cookie_steamLoginSecure}")" \
+  -F "sessionid=${steam_cookie_sessionid}" \
   -F "doSub=1" \
   -F "avatar=@${avatar}" \
-  $steam_uploadurl \
+  "${steam_url_upload}" \
 )
 
 RESPONSE "STEAM-UPLOAD" "${upload}"

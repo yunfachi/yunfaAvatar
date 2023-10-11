@@ -3,9 +3,9 @@
 INFO "Updating avatar in Hypixel"
 
 fetch=$(curl -s \
-  -b "xfNew_tfa_trust=${hypixel_tfa}; xfNew_user=${hypixel_id}%2C${hypixel_auth}" \
+  -b "xfNew_tfa_trust=${hypixel_cookie_xfNew_tfa_trust}; xfNew_user=${hypixel_cookie_xfNew_user}" \
   -c - \
-  $hypixel_fetchurl \
+  "${hypixel_url_fetch}" \
 )
 
 RESPONSE "HYPIXEL-FETCH" "${fetch}"
@@ -20,7 +20,7 @@ upload=$(curl -s \
   -F "upload=@${avatar}" \
   -F "_xfToken=$(grep -o 'data-csrf="[^"]*' <<< $fetch | grep -o '[^"]*$')" \
   -F "_xfResponseType=json" \
-  $hypixel_uploadurl \
+  "${hypixel_url_upload}" \
 )
 
 RESPONSE "HYPIXEL-UPLOAD" "${upload}"
