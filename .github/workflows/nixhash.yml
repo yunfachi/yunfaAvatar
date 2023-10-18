@@ -1,0 +1,22 @@
+name: "nix hash"
+on:
+  pull_request:
+  push:
+jobs:
+  get-nix-hash:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: cachix/install-nix-action@v22
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: "Set hash"
+      id: "set_hash"
+      run: |
+        echo "HASH=$(nix hash to-sri --type sha256 $(nix-prefetch-url --unpack https://github.com/yunfachi/yunfaavatar/archive/0.2.0.tar.gz))" >> $GITHUB_ENV
+
+    - name: "Print hash"
+      id: "print_hash"
+      run: |
+        printf "\n\n%s\n\n\n" "${HASH}"
