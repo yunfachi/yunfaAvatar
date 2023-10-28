@@ -4,12 +4,12 @@ XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-${HOME}/.config}
 SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
 TEMP_DIR=$(mktemp -d)
 
-source $SCRIPT_DIR/utils/logger.sh
-source $SCRIPT_DIR/utils/config.sh
-source $SCRIPT_DIR/utils/options.sh
-source $SCRIPT_DIR/utils/avatar.sh
+source $SCRIPT_DIR/../lib/yunfaavatar/utils/logger.sh
+source $SCRIPT_DIR/../lib/yunfaavatar/utils/config.sh
+source $SCRIPT_DIR/../lib/yunfaavatar/utils/options.sh
+source $SCRIPT_DIR/../lib/yunfaavatar/utils/avatar.sh
 
-for service in $SCRIPT_DIR/services/*.sh; do
+for service in $SCRIPT_DIR/../lib/yunfaavatar/services/*; do
   name=$(basename $service .sh)
   value=$(eval echo \$$name)
   if [[ $value == "true" || $value == $name ]]; then
