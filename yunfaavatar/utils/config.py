@@ -17,9 +17,9 @@ Code
 """
 
 class Config(dict):
-    def __init__(self, path: str | pathlib.Path):
+    def __init__(self, path: str):
         super().__init__()
-        self.path : pathlib.Path = path if isinstance(path, pathlib.Path) else pathlib.Path(path)
+        self.path : pathlib.Path = pathlib.Path(path)
         self.load()
     
     def load(self):
@@ -27,7 +27,6 @@ class Config(dict):
         self.update(yaml.safe_load(open_path(self.path)))
     
     def save(self):
-        #print(123,repr(self))
         yaml.dump(dict(self), open_path(self.path, "w"))
 
 def open_path(path: pathlib.Path, mode: str = "r"):
