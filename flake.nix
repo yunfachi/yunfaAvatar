@@ -8,17 +8,9 @@
     pkgs = import nixpkgs {inherit system;};
     pkgs-python = pkgs.python311Packages.override {
       overrides = self: super: {
-        /*
-          yunfaavatar = super.buildPythonPackage rec {
-          pname = "yunfaavatar";
-          version = "1.0.0";
-          src = super.fetchPypi {
-            inherit pname version;
-            sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-          };
-          buildInputs = with super; [];
+        pillow = super.pillow.override rec {
+          version = "10.0.0";
         };
-        */
       };
     };
   in {
@@ -31,7 +23,8 @@
         ]
         ++ (with pkgs-python; [
           pyyaml
-          aiohttp
+          httpx
+          pillow
         ]);
     };
   };
